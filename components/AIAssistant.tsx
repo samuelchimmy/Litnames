@@ -71,25 +71,28 @@ const AIAssistant: React.FC = () => {
     <>
       <button 
         onClick={() => setIsOpen(true)}
-        className="fixed bottom-6 right-6 p-4 bg-orange-600 rounded-full shadow-2xl hover:scale-110 transition-transform z-50 glow-orange"
+        className="fixed bottom-4 right-4 md:bottom-6 md:right-6 p-4 bg-orange-600 rounded-full shadow-2xl hover:scale-110 transition-transform z-50 glow-orange"
+        aria-label="Open AI Assistant"
       >
-        <Bot className="text-white w-6 h-6" />
+        <Bot className="text-white w-5 h-5 md:w-6 md:h-6" />
       </button>
 
       {isOpen && (
-        <div className="fixed bottom-24 right-6 w-96 max-w-[calc(100vw-3rem)] h-[500px] bg-zinc-900 border border-zinc-800 rounded-3xl shadow-2xl z-50 flex flex-col overflow-hidden animate-in slide-in-from-bottom-4">
+        <div className="fixed bottom-20 right-4 md:bottom-24 md:right-6 w-[calc(100vw-2rem)] md:w-96 h-[450px] md:h-[500px] bg-zinc-900 border border-zinc-800 rounded-3xl shadow-2xl z-50 flex flex-col overflow-hidden animate-in slide-in-from-bottom-4">
           <div className="p-4 bg-zinc-800 border-b border-zinc-700 flex justify-between items-center">
             <div className="flex items-center gap-2">
               <Sparkles className="w-4 h-4 text-orange-500" />
-              <span className="font-bold text-white tracking-tight uppercase">Get Lit Planner</span>
+              <span className="font-bold text-white tracking-tight uppercase text-xs md:text-sm">Get Lit Planner</span>
             </div>
-            <button onClick={() => setIsOpen(false)}><X className="w-4 h-4 text-zinc-400 hover:text-white transition-colors" /></button>
+            <button onClick={() => setIsOpen(false)} aria-label="Close Assistant">
+              <X className="w-4 h-4 text-zinc-400 hover:text-white transition-colors" />
+            </button>
           </div>
           
           <div ref={scrollRef} className="flex-1 overflow-y-auto p-4 space-y-4 bg-zinc-900/50">
             {messages.map((m, i) => (
               <div key={i} className={`flex ${m.role === 'user' ? 'justify-end' : 'justify-start'}`}>
-                <div className={`max-w-[85%] p-4 rounded-2xl text-sm leading-relaxed ${
+                <div className={`max-w-[90%] p-3 md:p-4 rounded-2xl text-[13px] md:text-sm leading-relaxed ${
                   m.role === 'user' ? 'bg-orange-600 text-white shadow-lg shadow-orange-600/10' : 'bg-zinc-800 text-zinc-200 border border-zinc-700 shadow-sm'
                 }`}>
                   {m.text}
@@ -98,24 +101,25 @@ const AIAssistant: React.FC = () => {
             ))}
             {isLoading && (
               <div className="flex justify-start">
-                <div className="bg-zinc-800 p-4 rounded-2xl border border-zinc-700">
+                <div className="bg-zinc-800 p-3 md:p-4 rounded-2xl border border-zinc-700">
                   <Loader2 className="w-4 h-4 animate-spin text-orange-500" />
                 </div>
               </div>
             )}
           </div>
 
-          <div className="p-4 bg-zinc-900 border-t border-zinc-800 flex gap-2">
+          <div className="p-3 md:p-4 bg-zinc-900 border-t border-zinc-800 flex gap-2">
             <input 
               value={input}
               onChange={(e) => setInput(e.target.value)}
               onKeyDown={(e) => e.key === 'Enter' && handleSend()}
-              placeholder="How do we spark the .lit launch?"
-              className="flex-1 bg-zinc-800 border-none rounded-xl px-4 py-3 text-sm text-white focus:ring-1 ring-orange-500 placeholder-zinc-500"
+              placeholder="How do we spark launch?"
+              className="flex-1 bg-zinc-800 border-none rounded-xl px-4 py-3 text-[13px] md:text-sm text-white focus:ring-1 ring-orange-500 placeholder-zinc-500"
             />
             <button 
               onClick={handleSend}
-              className="p-3 bg-orange-600 rounded-xl hover:bg-orange-500 transition-colors shadow-lg shadow-orange-600/20"
+              className="p-3 bg-orange-600 rounded-xl hover:bg-orange-500 transition-colors shadow-lg shadow-orange-600/20 shrink-0"
+              disabled={isLoading}
             >
               <Send className="w-4 h-4 text-white" />
             </button>

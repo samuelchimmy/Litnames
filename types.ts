@@ -31,4 +31,10 @@ export interface OwnedDomain {
   expiryYears: number;
   mintedAt: Date;
   isPrimary?: boolean;
+  records?: {
+    bio?: string;
+    discord?: string;
+    twitter?: string;
+    telegram?: string;
+  };
 }

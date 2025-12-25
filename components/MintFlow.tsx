@@ -7,9 +7,10 @@ interface Props {
   domain: string;
   onClose: () => void;
   onComplete: (domain: string, years: number) => void;
+  accountAddress?: string | null;
 }
 
-const MintFlow: React.FC<Props> = ({ domain, onClose, onComplete }) => {
+const MintFlow: React.FC<Props> = ({ domain, onClose, onComplete, accountAddress }) => {
   const [step, setStep] = useState(1);
   const [years, setYears] = useState(1);
   const [isMinting, setIsMinting] = useState(false);
@@ -22,6 +23,11 @@ const MintFlow: React.FC<Props> = ({ domain, onClose, onComplete }) => {
       setIsMinting(false);
       setStep(3);
     }, 2000);
+  };
+
+  const formatAddress = (addr: string | null | undefined) => {
+    if (!addr) return "0x00...0000";
+    return `${addr.slice(0, 6)}...${addr.slice(-4)}`;
   };
 
   return (
@@ -93,7 +99,7 @@ const MintFlow: React.FC<Props> = ({ domain, onClose, onComplete }) => {
                 </div>
                 <div className="flex justify-between items-center">
                   <span className="text-zinc-400">Owner</span>
-                  <span className="text-zinc-500 font-mono text-xs">0x71...F4a2</span>
+                  <span className="text-zinc-500 font-mono text-xs">{formatAddress(accountAddress)}</span>
                 </div>
               </div>
 
